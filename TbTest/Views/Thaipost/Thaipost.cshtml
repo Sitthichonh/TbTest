@@ -1,0 +1,401 @@
+﻿@{
+    ViewData["Title"] = "Thaipost";
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Thaipost</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Thaipost Page</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div class="input-group">
+                                <input type="search" class="form-control form-control-lg" id="thaipost-search" placeholder="Type Zip Code here">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-lg btn-default" onclick="SearchThaiPost()">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                            <form>
+                                <div class="form-group row">
+                                    <label for="zipcode" class="col-sm-2 col-form-label">Zip Code</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="zipcode" placeholder="zipcode" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="officename" class="col-sm-2 col-form-label">Office Name</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="officename" placeholder="officename" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="branch" class="col-sm-2 col-form-label">Branch</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="branch" placeholder="branch" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="addresstp" class="col-sm-2 col-form-label">Address</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="addresstp" placeholder="address" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="phone" class="col-sm-2 col-form-label">Phone</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="phone" placeholder="phone" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="workingday-drop" class="col-sm-2 col-form-label">Working Day</label>
+                                    <div class="col-sm-10">
+                                        <div id="working-day-dropdown"></div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="workingDay" class="col-sm-2 col-form-label">workingDay</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="workingday" placeholder="workingDay" readonly>
+                                    </div>
+                                </div>
+
+                                @*<div class="form-group row">
+                                    <label for="date" class="col-sm-2 col-form-label">วันเวลารับแจ้ง</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inputdate" placeholder="input date" value="29/10/2022 15:04:23">
+                                    </div>
+                                </div>*@
+
+                                <div class="form-group row">
+                                    <label for="date" class="col-sm-2 col-form-label">วันเวลารับแจ้ง</label>
+                                    <div class="col-sm-10">
+                                        <div class="input-group date" id="datetimepicker1">
+                                            <input type="text" class="form-control" id="inputdate" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="datetimedisplay" class="col-sm-2 col-form-label">วันเวลาแล้วเสร็จ</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="outputdate" placeholder="เวลาแล้วเสร็จ" readonly>
+                                    </div>
+                                </div>
+
+                                <button type="button" class="btn btn-primary" onclick="CulWorikingDay()">คำนวนเวลาแล้วเสร็จ</button>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+    <div class="p-3">
+        <h5>Title</h5>
+        <p>Sidebar content</p>
+    </div>
+</aside>
+<!-- /.control-sidebar -->
+<!-- jQuery -->
+<script src="~/plugins/jquery/jquery.min.js"></script>
+<script src="~/js/moment.js"></script>
+
+<script src="http://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+@section Styles{
+    <environment names="Development,Production,Staging">
+        <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet" />
+        <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css" rel="stylesheet" />
+    </environment>
+}
+
+@section Scripts{
+         <environment names="Development,Staging">
+            <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js"></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+        </environment>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+            $("#datetimepicker1").datetimepicker({
+                format: 'DD/MM/YYYY HH:mm:ss',
+                defaultDate: new Date(),
+            });
+    })
+
+    function SearchThaiPost() {
+
+        console.log("SearchThaiPost")
+        var zipCode = document.getElementById('thaipost-search').value
+        console.log("zipCode", zipCode)
+        $.ajax({
+            url: "@Url.Action("GetThaiPostByZipCode","Thaipost")",
+            data: {
+                zipCode: zipCode
+            },
+            success: function (result) {
+
+                console.log("result", result)
+                if (result.isSuccess) {
+                    ManageDropDown(result.result)
+                } else {
+                    swal({
+                        title: "Error!",
+                        text: result.message,
+                        icon: "error",
+                    });
+                }
+            }
+        });
+    }
+
+
+    function ManageDropDown(data) {
+        document.getElementById('zipcode').value = data.zipCode //ถ้าไม่มี $ คือ javascript /javascript ไม่มี ; ก็ได้
+        document.getElementById('officename').value = data.postOfficeName
+        document.getElementById('branch').value = data.branch
+        document.getElementById('addresstp').value = data.address
+        document.getElementById('phone').value = data.phone
+        document.getElementById('workingday').value = data.workingDay
+
+        var workingDaySplit = data.workingDay.split('|')
+        var options = "";
+        for (var i = 0; i < workingDaySplit.length; i++) {
+            var index = workingDaySplit[i]
+            options += `<option>${index}</option>`
+        }
+        var workingDay = `<select class="form-control" id="working-day">
+                                        ${options}
+                                </select>`
+        document.getElementById('working-day-dropdown').innerHTML = workingDay;
+    }
+
+
+    //var workingDay = "จ. 08.30-17.00 | อ. 08.30-17.00 | พ. 08.30-17.00 | พฤ. 08.30-17.00 | ศ. 08.30-17.00 | ส. 09.00-12.00 | อา. 09.00-15.00 | วันหยุด 09.00-12.00 | วันชดเชย 09.00-12.00";
+    //var workingDayV1 = "จ. 08.00-19.00 | อ. 08.00-19.00 | พ. 08.00-19.00 | พฤ. 08.00-19.00 | ศ. 08.00-19.00 | ส. 08.00-17.00 | อา. 08.00-12.00 | วันหยุด เปิดตามวัน | วันชดเชย เปิดตามวัน";
+    ////var workingDayV1 = workingDay;
+    //var listofWorkingDay = workingDayV1.split("|");
+    //console.log("listofWorkingDay", listofWorkingDay)
+    //var currentDateInput = '15/10/2022 16:00:00';
+
+
+    //console.log("currentDateInput", currentDateInput)
+
+    //CaculateWorikingDay(listOfWorkingDay, currentDateInput)
+
+    function CulWorikingDay() {
+       
+        //var listOfWork = $('#working-day').val();
+        var listOfWork = $('#workingday').val().split("|");//ถ้ามี $ คือ jQuery
+        var dateInput = $('#inputdate').val();
+        CaculateWorikingDay(listOfWork, dateInput)
+        //console.log("listOfWork", listOfWork)
+        //console.log("dateInput", dateInput)
+    }
+
+    function CaculateWorikingDay(listOfWork, dateInput) {
+        let dateTimeDisplay = "";
+        var listWork = [];
+        for (var i = 0; i < listOfWork.length; i++) {
+            var work = listOfWork[i];
+            var workDay = SplitDayOfWeekStr(work, listOfWork)
+            listWork.push(workDay);
+        }
+
+        const dayOfWeekInput = moment(dateInput, "DD/MM/YYYY HH:mm:ss").isoWeekday()
+        const dayWorking = listWork[dayOfWeekInput - 1]
+        //const currentDate = moment().format("DD/MM/YYYY");
+        const defaultEndTimeOfHours = dayWorking.endTime.split('.')[0]
+        const defaultEndTimeMinute = dayWorking.endTime.split('.')[1]
+        const defaultEndDateTime = moment(dateInput, "DD/MM/YYYY").add(defaultEndTimeOfHours, "hours").add(defaultEndTimeMinute, 'minutes');
+        const isDefaultEndDateBeforeInputDate = defaultEndDateTime.isSameOrBefore(moment(dateInput, "DD/MM/YYYY HH:mm:ss"));
+        if (isDefaultEndDateBeforeInputDate) {
+            dateTimeDisplay = DefaultEndDateBeforeInputDate(listWork, dateInput)
+        } else {
+            dateTimeDisplay = InputDateBeforeDefaultEndDate(listWork, dateInput, dayWorking)
+        }
+
+        console.log("dateTimeDisplay", dateTimeDisplay);
+        document.getElementById('outputdate').value = dateTimeDisplay //javascript ไม่ต้องใส่ (# คือ id) jQuery ต้องใส่ #
+    }
+
+    function DefaultEndDateBeforeInputDate(listWork, dateInput) {
+        const dateInputAddDay = moment(dateInput, "DD/MM/YYYY").add(1, 'days')
+        const dayOfWeek = dateInputAddDay.isoWeekday();
+        const dayWorking = listWork[dayOfWeek - 1]
+        const startDateTimeWorking = moment(dateInput, "DD/MM/YYYY").add(1, 'days').add(dayWorking.startTime.split('.')[0], 'hours').add(dayWorking.startTime.split('.')[1], 'minutes')
+        const endDateTimeWorking = moment(dateInput, "DD/MM/YYYY").add(1, 'days').add(dayWorking.endTime.split('|')[0], 'hours')
+        const dayWorkingPlus8Hours = startDateTimeWorking.add(8, 'hours')
+
+        //console.log("startDateTimeWorking",startDateTimeWorking.format("DD/MM/YYYY HH:mm:ss"))
+
+        //console.log("endDateTimeWorking",endDateTimeWorking.format("DD/MM/YYYY HH:mm:ss"))
+
+        //console.log("dayWorkingPlus8Hours",dayWorkingPlus8Hours.format("DD/MM/YYYY HH:mm:ss"))
+
+        if (endDateTimeWorking.isBefore(dayWorkingPlus8Hours)) {
+            console.log("condition 1 ")
+            const previosTime = moment.utc(moment(dayWorkingPlus8Hours, "DD/MM/YYYY HH:mm:ss").diff(moment(endDateTimeWorking.format("DD/MM/YYYY HH:mm:ss"), "DD/MM/YYYY HH:mm:ss"))).format("HH:mm:ss")
+            const dateInputAddDayNext = moment(dateInputAddDay).add(1, 'days')
+            const dayOfWeekNext = dateInputAddDayNext.isoWeekday();
+            const dayWorkingNext = listWork[dayOfWeekNext - 1]
+            const dayDateTimeWorking = moment(dateInputAddDay).add(1, 'days').add(dayWorkingNext.startTime, 'hours')
+            return dayDateTimeWorking.add(previosTime, 'hours').format("DD/MM/YYYY HH:mm:ss");
+        } else {
+            console.log("condition 2 ")
+            return dayWorkingPlus8Hours.format("DD/MM/YYYY HH:mm:ss");
+        }
+
+    }
+
+    function InputDateBeforeDefaultEndDate(listWork, dateInput, dayWorking) {
+        const inputTime = moment(dateInput, "DD/MM/YYYYY HH:mm:ss")
+        const workingTime = moment(dateInput, "DD/MM/YYYY").add(dayWorking.startTime, 'hours')
+        let dayStartDateTimeWorking = moment(dateInput, "DD/MM/YYYY HH:mm:ss")
+        if (inputTime.isBefore(workingTime)) {
+            dayStartDateTimeWorking = workingTime
+        } else {
+            dayStartDateTimeWorking = inputTime
+        }
+        const dayEndDateTimeWorking = moment(dateInput, "DD/MM/YYYY").add(dayWorking.endTime, 'hours')
+        const dayWorkingPlus8Hours = dayStartDateTimeWorking.add(8, 'hours')
+        if (dayEndDateTimeWorking.isBefore(dayWorkingPlus8Hours)) {
+            console.log("condition 3 ")
+            const dateInputAddDay = moment(dateInput, "DD/MM/YYYY").add(1, 'days')
+            const previousTime = moment.utc(moment(dayWorkingPlus8Hours, "DD/MM/YYYY HH:mm:ss").diff(moment(dayEndDateTimeWorking.format("DD/MM/YYYY HH:mm:ss"), "DD/MM/YYYY HH:mm:ss"))).format("HH:mm:ss")
+            const dayOfWeek = dateInputAddDay.isoWeekday();
+            const dayWorkingWeek = listWork[dayOfWeek - 1]
+            const dayDateTimeWorking = moment(dateInputAddDay).add(dayWorkingWeek.startTime, 'hours')
+
+            return dayDateTimeWorking.add(previousTime, 'hours').format("DD/MM/YYYY HH:mm:ss");
+
+        } else {
+            console.log("condition 4 ")
+            return dayWorkingPlus8Hours.format("DD/MM/YYYY HH:mm:ss");
+        }
+    }
+
+
+    function SplitDayOfWeekStr(work, listOfWork) {
+
+        var dayOfWeek = moment().isoWeekday()
+
+        if (work.indexOf('จ.') > -1) {
+            var toTimeEndTime = work.replace('จ.', '').trim().split('-')
+            var toTime = toTimeEndTime[0]
+            var endTime = toTimeEndTime[1]
+            return { dayOfWeek: 1, startTime: toTime, endTime: endTime, day: "วันจันทร์" }
+        } else if (work.indexOf('อ.') > -1) {
+            var toTimeEndTime = work.replace('อ.', '').trim().split('-')
+            var toTime = toTimeEndTime[0]
+            var endTime = toTimeEndTime[1]
+            return { dayOfWeek: 2, startTime: toTime, endTime: endTime, day: "วันอังคาร" }
+        } else if (work.indexOf('พ.') > -1) {
+            var toTimeEndTime = work.replace('พ.', '').trim().split('-')
+            var toTime = toTimeEndTime[0]
+            var endTime = toTimeEndTime[1]
+            return { dayOfWeek: 3, startTime: toTime, endTime: endTime, day: "วันพุธ" }
+        } else if (work.indexOf('พฤ.') > -1) {
+            var toTimeEndTime = work.replace('พฤ.', '').trim().split('-')
+            var toTime = toTimeEndTime[0]
+            var endTime = toTimeEndTime[1]
+            return { dayOfWeek: 4, startTime: toTime, endTime: endTime, day: "วันพฤหัสบดี" }
+        } else if (work.indexOf('ศ.') > -1) {
+            var toTimeEndTime = work.replace('ศ.', '').trim().split('-')
+            var toTime = toTimeEndTime[0]
+            var endTime = toTimeEndTime[1]
+            return { dayOfWeek: 5, startTime: toTime, endTime: endTime, day: "วันศุกร์" }
+        } else if (work.indexOf('ส.') > -1) {
+            if (work.indexOf('ปิด') > -1){
+                var toTime = "08:00"
+                var endTime = "08:00"
+                return { dayOfWeek: 6, startTime: toTime, endTime: endTime, day: "วันเสาร์" }
+            }else{
+                var toTimeEndTime = work.replace('ส.', '').trim().split('-')
+                var toTime = toTimeEndTime[0]
+                var endTime = toTimeEndTime[1]
+                return { dayOfWeek: 6, startTime: toTime, endTime: endTime, day: "วันเสาร์" }
+            }
+        } else if (work.indexOf('อา.') > -1) {
+            if(work.indexOf('ปิด') > -1){
+                var toTime = "08:00"
+                var endTime = "08:00"
+                return { dayOfWeek: 7, startTime: toTime, endTime: endTime, day: "วันอาทิตย์" }
+            }else{
+                var toTimeEndTime = work.replace('อา.', '').trim().split('-')
+                var toTime = toTimeEndTime[0]
+                var endTime = toTimeEndTime[1]
+                return { dayOfWeek: 7, startTime: toTime, endTime: endTime, day: "วันอาทิตย์" }
+            }
+        } else if (work.indexOf('วันหยุด') > -1) {
+            //console.log("work",work)
+            if (work.indexOf('เปิดตามวัน') > -1) {
+                var openForDay = listOfWork[dayOfWeek - 1]
+                var toTimeEndTime = openForDay.replace(/อา.|ส.|จ.|อ.|พ.|พฤ.|ศ./gi, '').trim().split('-')
+                var toTime = toTimeEndTime[0]
+                var endTime = toTimeEndTime[1]
+                return { dayOfWeek: 8, startTime: toTime, endTime: endTime, day: "วันหยุด เปิดตามวัน" }
+            } else {
+                var toTimeEndTime = work.replace('วันหยุด', '').trim().split('-')
+                var toTime = toTimeEndTime[0]
+                var endTime = toTimeEndTime[1]
+                return { dayOfWeek: 8, startTime: toTime, endTime: endTime, day: "วันหยุด" }
+            }
+
+        } else if (work.indexOf('วันชดเชย') > -1) {
+            if (work.indexOf('เปิดตามวัน') > -1) {
+                var openForDay = listOfWork[dayOfWeek - 1]
+                var toTimeEndTime = openForDay.replace(/อา.|ส.|จ.|อ.|พ.|พฤ.|ศ./gi, '').trim().split('-')
+                var toTime = toTimeEndTime[0]
+                var endTime = toTimeEndTime[1]
+                return { dayOfWeek: 9, startTime: toTime, endTime: endTime, day: "วันชดเชย เปิดตามวัน" }
+            }
+            var toTimeEndTime = work.replace('วันชดเชย', '').trim().split('-')
+            var toTime = toTimeEndTime[0]
+            var endTime = toTimeEndTime[1]
+            return { dayOfWeek: 9, startTime: toTime, endTime: endTime, day: "วันชดเชย" }
+        }
+    }
+
+</script>
+
+}
